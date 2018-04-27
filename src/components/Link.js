@@ -15,7 +15,11 @@ class CSVLink extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {};
+
     this.buildURI= this.buildURI.bind(this);
+    this.downloadFile = this.downloadFile.bind(this);
+    this.clearDownloadComponent = this.clearDownloadComponent.bind(this);
   }
 
   buildURI() {
@@ -38,18 +42,34 @@ class CSVLink extends React.Component {
     }
   }
 
+  downloadFile(data) {
+    const csvData = typeof data === 'function' ? data() : data;
+    this.setState({ downloadComponent: <CSVDownload data={csvData} /> }, this.clearDownloadComponent);
+  }
+
+  clearDownloadComponent() {
+    this.setState({ downloadComponent: null });
+  }
+
   render(){
     const { data, headers, separator, filename, uFEFF, children , ...rest } = this.props;
-    const csvData = typeof data === 'function' ? data() : data;
 
     return (
-      <a download={filename} {...rest}
-         ref={link => (this.link = link)}
-         href={this.buildURI(csvData, uFEFF, headers, separator)}
-         onClick={evt => this.handleLegacy(evt, csvData, headers, separator, filename)}>
-        {children}
-      </a>
+      <a download={ filename } {...rest}
+        onClick={ () => this.downloadFile(data, uFEFF, headers, separator) }>
+          { children }
+          { this.state.downloadComponent ? this.state.downloadComponent : null }
+        </a>
     )
+
+    // return (
+    //   <a download={filename} {...rest}
+    //      ref={link => (this.link = link)}
+    //      href={this.buildURI(csvData, uFEFF, headers, separator)}
+    //      onClick={evt => this.handleLegacy(evt, csvData, headers, separator, filename)}>
+    //     {children}
+    //   </a>
+    // )
   }
 }
 
