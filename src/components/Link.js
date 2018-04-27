@@ -40,6 +40,9 @@ class CSVLink extends React.Component {
 
   render(){
     const {data, headers, separator, filename, uFEFF, children , ...rest} = this.props;
+     
+    const csvData = typeof data === 'function' ? data() : data;
+     
     return (
       <a download={filename} {...rest}
          ref={link => (this.link = link)}
