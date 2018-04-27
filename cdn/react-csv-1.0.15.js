@@ -153,6 +153,8 @@ var CSVLink = function (_React$Component) {
           children = _props.children,
           rest = _objectWithoutProperties(_props, ['data', 'headers', 'separator', 'filename', 'uFEFF', 'children']);
 
+      var csvData = typeof data === 'function' ? data() : data;
+
       return _react2.default.createElement(
         'a',
         _extends({ download: filename }, rest, {
@@ -161,7 +163,7 @@ var CSVLink = function (_React$Component) {
           },
           href: this.buildURI(data, uFEFF, headers, separator),
           onClick: function onClick(evt) {
-            return _this2.handleLegacy(evt, data, headers, separator, filename);
+            return _this2.handleLegacy(evt, csvData, headers, separator, filename);
           } }),
         children
       );
