@@ -39,13 +39,13 @@ class CSVLink extends React.Component {
   }
 
   render(){
-    const {data, headers, separator, filename, uFEFF, children , ...rest} = this.props;
+    const { data, headers, separator, filename, uFEFF, children , ...rest } = this.props;
     const csvData = typeof data === 'function' ? data() : data;
 
     return (
       <a download={filename} {...rest}
          ref={link => (this.link = link)}
-         href={this.buildURI(data, uFEFF, headers, separator)}
+         href={this.buildURI(csvData, uFEFF, headers, separator)}
          onClick={evt => this.handleLegacy(evt, csvData, headers, separator, filename)}>
         {children}
       </a>
