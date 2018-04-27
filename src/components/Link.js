@@ -3,6 +3,7 @@ import {buildURI, toCSV} from '../core';
 import {
    defaultProps as commonDefaultProps,
    propTypes as commonPropTypes} from '../metaProps';
+import CSVDownload from './Download';
 
 /**
  *
